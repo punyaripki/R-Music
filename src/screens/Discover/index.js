@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import React from 'react';
-import {BlogList} from '../../../data';
+import {BlogList, Library} from '../../../data';
 import {ItemSmall} from '../../components'; 
 import {SearchNormal1} from 'iconsax-react-native';
 import { fontType, colors } from '../../theme';
@@ -25,7 +25,7 @@ const FlatListRecent = () => {
     return <ItemRecent item={item} />;
   };
   return (
-    <FlatList
+    <FlatList style={styles.category}
       data={data}
       keyExtractor={item => item.id}
       renderItem={item => renderItem({...item})}
@@ -33,44 +33,65 @@ const FlatListRecent = () => {
       contentContainerStyle={{paddingHorizontal: 24, paddingVertical: 10}}
       horizontal
       showsHorizontalScrollIndicator={false}
+      color={colors.white()}
     />
   );
 };
+
+
 const Discover = () => {
-  const recentBlog = BlogList.slice(5);
+  const recentBlog = Library.slice(0);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.bar}>
-          <SearchNormal1 size={18} color={colors.grey(0.5)} variant="Linear" />
+          <SearchNormal1 size={18} color={colors.white()} variant="Linear" />
           <Text style={styles.placeholder}>Search</Text>
         </View>
       </View>
       <View>
-        <Text style={recent.text}>Recent Search</Text>
+        <Text style={recent.text}>Browse All</Text>
         <FlatListRecent />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.listCard}>
-          {recentBlog.map((item, index) => (
-            <ItemSmall item={item} key={index} />
-          ))}
+          {recentBlog.map}
+        </View>
+        <View>
+        <ListBlog />
         </View>
       </ScrollView>
     </View>
   );
 };
+const ListBlog = () => {
+ 
+  const verticalData = BlogList.slice(0);
+  return (
+    <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.listCard}>
+          {verticalData.map((item, index) => (
+            <ItemSmall item={item} key={index} />
+          ))}
+        </View>
+    </ScrollView>
+    
+  );
+          };
 export default Discover;
 
 const styles = StyleSheet.create({
   listCard: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 30,
     paddingHorizontal: 24,
     paddingBottom: 10,
-    gap: 10,
+    color: colors.white(),
   },
   container: {
     flex: 1,
-    backgroundColor: '#27374D',
+    backgroundColor: colors.latar(),
   },
 header: {
     paddingHorizontal: 24,
@@ -87,15 +108,18 @@ header: {
     padding: 10,
     gap: 10,
     alignItems: 'center',
-    backgroundColor: colors.grey(0.05),
+    backgroundColor: colors.green(),
     borderRadius: 10,
     flex: 1,
   },
   placeholder: {
     fontSize: 14,
     fontFamily: fontType['Pjs-Medium'],
-    color: colors.grey(0.5),
+    color: colors.white(),
     lineHeight: 18,
+  },
+  category:{
+color:colors.white(),
   },
 });
 const recent = StyleSheet.create({
@@ -110,12 +134,13 @@ const recent = StyleSheet.create({
   label: {
     fontSize: 12,
     fontFamily: fontType['Pjs-Medium'],
-    color: colors.grey(0.65),
+    color: colors.white(),
+    backgroundColor:colors.latar(),
   },
   text: {
     fontSize: 14,
     fontFamily: fontType['Pjs-Bold'],
-    color: colors.black(),
+    color: colors.white(),
     paddingVertical: 5,
     paddingHorizontal: 24,
   },

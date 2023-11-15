@@ -1,20 +1,15 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity,split} from 'react-native';
 import React from 'react';
 import {Receipt21, Clock, Message} from 'iconsax-react-native';
 import FastImage from 'react-native-fast-image';
 import { fontType, colors } from '../theme';
+import {useNavigation} from '@react-navigation/native';
 
-const truncateTextByWords = (text, maxWords) => {
-  const words = text.split(' ');
-  if (words.length > maxWords) {
-    return words.slice(0, maxWords).join(' ') + ' ...';
-  }
-  return text;
-}
 
 const ItemBookmark = ({item, onPress, variant}) => {
+  const navigation = useNavigation();
   return (
-      <TouchableOpacity style={styles.cardItem} onPress={()=>{}}>
+    <TouchableOpacity style={styles.cardItem} onPress={()=>navigation.navigate('BlogDetail', {blogId: item.id})}>
         <FastImage
           style={styles.cardImage}
           source={{
@@ -44,10 +39,7 @@ const ItemBookmark = ({item, onPress, variant}) => {
               style={styles.blogTitle}>
               {item.title}
             </Text>
-            <Text
-              style={styles.blogContent}>
-              {truncateTextByWords(item.content, 10)}
-            </Text>
+           
           </View>
           <View style={styles.cardInfo}>
             <View style={{flexDirection: 'row', alignItems: 'center', gap:5}}>

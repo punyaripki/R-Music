@@ -1,11 +1,13 @@
-import {StyleSheet, Text, View,FlatList} from 'react-native';
+import {StyleSheet, Text, View,FlatList,TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Play,Pause} from 'iconsax-react-native';
 import React, { useState } from 'react';
 import { fontType, colors } from '../theme';
+import {useNavigation} from '@react-navigation/native';
 
 
 const ItemSmall = ({ item }) => {
+  const navigation = useNavigation();
   const [isTouch, setPause] = useState([]);
 
   const togglePlay = (itemId) => {
@@ -20,6 +22,7 @@ const ItemSmall = ({ item }) => {
   />;
  
   return (
+    <TouchableOpacity onPress={() => navigation.navigate('BlogDetail', {blogId: item.id})}>
     <View style={styles.cardItem}>
       <FastImage
         style={styles.cardImage}
@@ -31,32 +34,27 @@ const ItemSmall = ({ item }) => {
         resizeMode={FastImage.resizeMode.cover}
       />
       <View style={styles.cardContent}>
-        <View style={{ flexDirection: 'row', gap: 30 }}>
-          <View style={{ gap: 5, flex: 1 }}>
-            <Text style={styles.cardCategory}>{item.category}</Text>
-            <Text style={styles.cardTitle}>{item.title}</Text>
-          </View>
-          <Play
+      <Play
            item={item}
            keyExtractor={item => item.id}
-            color={colors.grey(0.6)} // Pastikan colors.grey() sesuai dengan implementasi Anda
+            color={colors.white()} // Pastikan colors.grey() sesuai dengan implementasi Anda
             variant={variant}
-            size={20}
+            size={25}
             onPress={() => togglePlay(item.id)}
           />
-        </View>
       </View>
     </View>
+    </TouchableOpacity>
   );
   
 };
+
 
 export default ItemSmall;
 const styles = StyleSheet.create({
   listCard: {
     paddingHorizontal: 24,
     paddingVertical: 10,
-    gap: 15,
   },
   cardItem: {
     backgroundColor: colors.blue(0.03),
@@ -79,10 +77,9 @@ const styles = StyleSheet.create({
     color: colors.grey(0.6),
   },
   cardImage: {
-    width: 94,
-    height: 94,
+    width: 90,
+    height: 90,
     borderRadius: 10,
-    resizeMode: 'cover',
   },
   cardInfo: {
     flexDirection: 'row',
@@ -90,11 +87,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardContent: {
-    gap: 10,
-    justifyContent: 'space-between',
-    paddingRight: 10,
-    paddingLeft: 15,
-    flex: 1,
-    paddingVertical: 10,
+    position: 'absolute',
+    top: 45,
+    left: 45,
+    right: 45,
+    bottom: 45, 
   },
 });

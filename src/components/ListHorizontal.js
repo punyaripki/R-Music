@@ -3,8 +3,11 @@ import React, {useState} from 'react';
 import {Play, Receipt21} from 'iconsax-react-native';
 import FastImage from 'react-native-fast-image';
 import { fontType, colors } from '../theme';
+import {useNavigation} from '@react-navigation/native';
 const ItemHorizontal = ({item, variant, onPress}) => {
+  const navigation = useNavigation();
   return (
+    <TouchableOpacity style={itemHorizontal.cardItem} onPress={() => navigation.navigate('BlogDetail', {blogId: item.id})}>
     <View style={itemHorizontal.cardItem}>
       <FastImage
         style={itemHorizontal.cardImage}
@@ -29,6 +32,7 @@ const ItemHorizontal = ({item, variant, onPress}) => {
         </View>
       </FastImage>
     </View>
+    </TouchableOpacity>
   );
 };
 const ListHorizontal = ({data}) => {
@@ -60,6 +64,7 @@ const ListHorizontal = ({data}) => {
       horizontal
       showsHorizontalScrollIndicator={false}
     />
+    
   );
 };
 export default ListHorizontal;

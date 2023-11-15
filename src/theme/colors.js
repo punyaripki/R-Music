@@ -5,5 +5,7 @@ const colors = {
     black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     darkModeBlack: (opacity = 1) => `rgba(27, 27, 27, ${opacity})`,
     darkModeBlue: (opacity = 1) => `rgba(146, 156, 241, ${opacity})`,
+    green: (opacity = 1) =>'#4F826F',
+    latar: (opacity = 1) =>'#040D12',
 }
 export default colors

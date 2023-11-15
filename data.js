@@ -91,3 +91,47 @@ export const ProfileData = {
   following: 3000,
   follower: 3000,
 };
+export const Library = [
+  {
+  id: 1,
+  title: 'Made for you',
+  image: 'https://i.pinimg.com/564x/6d/10/0e/6d100ef599c051ae3c417a9c68af3bcc.jpg',
+},
+{
+  id: 2,
+  title: 'Angklung',
+  image: 'https://i.pinimg.com/564x/3a/6c/18/3a6c186c4ad504786f47b41fec232ba6.jpg',
+},
+{
+  id: 3,
+  title: 'Gamelang',
+  image: 'https://i.pinimg.com/564x/01/18/2a/01182a980b3b14f77b0b09372531b6b9.jpg'
+  },
+{
+  id:4,
+  title:'Seruling Bambu',
+  image: 'https://i.pinimg.com/564x/7c/42/45/7c4245dc90ff9a6cd04dd1197a0eadbc.jpg',
+},
+{
+  id:5,
+  title:'Jimbe',
+  image:'https://i.pinimg.com/564x/be/58/fe/be58fe503e016e48922884d34d4f8881.jpg',
+}  ,
+{
+  id:6,
+  title: 'Gendang Beleq',
+  image: 'https://i.pinimg.com/564x/d2/4b/25/d24b25f60ead76a878d63c773bc1717e.jpg',
+},
+{
+  id: 7,
+  title:'Rebab',
+  image:'https://i.pinimg.com/564x/d2/4b/25/d24b25f60ead76a878d63c773bc1717e.jpg',
+},
+{
+  id: 8,
+  title:'Kolintang',
+  image:'https://i.pinimg.com/564x/b9/30/12/b93012b08fab6bfe357706044d7d8ec5.jpg',
+}
+
+
+];

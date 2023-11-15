@@ -1,42 +1,60 @@
-import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
-import {SearchNormal,Setting, HambergerMenu, Home2,MusicPlaylist,Play,Pause,Map1,MusicFilter,} from 'iconsax-react-native';
-import {BlogList, CategoryList} from '../../../data';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, Text, View, FlatList, TouchableOpacity,Image } from 'react-native';
+import { Setting } from 'iconsax-react-native';
+import { BlogList, CategoryList,ProfileData } from '../../../data';
 import { fontType, colors } from '../../theme';
 import { ListHorizontal, ItemSmall } from '../../components';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerLayout } from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
+import Dashboard from '../Dashboard';
+import { Profile } from '../Profile';
+
+
+const Drawer = createDrawerNavigator();
 
 
 export default function Home() {
   return (
+    <Drawer.Navigator  headerShown={false} initialRouteName="Home" drawerContent={() => 
+    <DrawerContent />}>
+      <Drawer.Screen name="Home" component={HomeScreen} />
+    </Drawer.Navigator>
+  );
+}
+
+const HomeScreen = () => {
+  const navigation = useNavigation();
+  return (
     <View style={styles.container}>
       <View style={styles.header}>
-       <HambergerMenu color={colors.white()} variant="Linear" size={24} />
-       <View>
-          <Text style={styles.title} color={colors.white()}>R-Music.</Text>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <Setting color={colors.white()} variant="Linear" size={24} style={{marginRight: 15}}/>
-        </View>
-        </View>
+        <DrawerLayout
+          drawerWidth={200}
+          drawerPosition={DrawerLayout.positions.Left}
+          drawerType="front"
+          headerShown={false}
+          renderNavigationView={DrawerContent}
+       />
+      </View>
       <View style={styles.listCategory}>
         <FlatListCategory />
       </View>
       <ListBlog />
-      <View style= {styles.footer}>
-        <TouchableOpacity onPress={() => 'home'} style={styles.startbottom}>
-          <Home2 style={{marginLeft:5,marginRight:20}} color={colors.white()} variant='linear' size={25}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => 'search'} style={styles.startbottom}>
-          <SearchNormal style={{marginLeft:5,marginRight:20}} color={colors.white()} variant='linear' size={25}/>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => 'search'} style={styles.startbottom}>
-          <MusicPlaylist style={{marginLeft:5,marginRight:20}} color={colors.white()} variant='linear' size={25}/>
-          </TouchableOpacity>
-        </View>
     </View>
   );
-}
+};
 
+const DrawerContent = () => {
+
+  return (
+    <View style={styles.drawerContent}>
+      <TouchableOpacity onPress={() => navigation.navigate('profileDetail')}>
+      <Image style={styles.pic} source={{ uri: 'https://media.licdn.com/dms/image/D5603AQEIpqnjQqkSpA/profile-displayphoto-shrink_800_800/0/1698759551331?e=2147483647&v=beta&t=UyGrO1N2WYpUuWC9faykVTT21OvTcKBGXRh8TlsXzV0'}} />
+      <Text style={styles.textProfile}>{ProfileData.name}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 
 const ListBlog = () => {
@@ -47,20 +65,17 @@ const ListBlog = () => {
       <Text style={styles.trending}>Trending Right Now</Text>
       <View style={styles.listBlog}>
         <ListHorizontal data={horizontalData} />
-        <Text  style={{ color: 'white', paddingHorizontal: 24, fontSize: 20, fontFamily: fontType['Pjs-Bold'],
-            }}> Category </Text>
-        <View style={{...category.item, marginLeft: 10}}>  
-            <View style={{alignItems: 'center', paddingTop: 10}}>
-              <Text style={category.textCat}>Region</Text>
-            </View>
-   
-            <View style={{alignItems: 'center', paddingTop: 10}}>
-              <Text style={category.textCat}>Tools</Text>
-            </View>
-           
-            <View style={{alignItems: 'center', paddingTop: 10}}>
-              <Text style={category.textCat}>Time</Text>
-            </View>
+        <Text style={{ color: 'white', paddingHorizontal: 24, fontSize: 20, fontFamily: fontType['Pjs-Bold'] }}> Category </Text>
+        <View style={{ ...category.item, marginLeft: 10 }}>
+          <View style={{ alignItems: 'center', padding: 10, backgroundColor:colors.green(),borderRadius:5  }}>
+            <Text style={category.textCat}>Region</Text>
+          </View>
+          <View style={{ alignItems: 'center', padding: 10,backgroundColor:colors.green(),borderRadius:5  }}>
+            <Text style={category.textCat}>Tools</Text>
+          </View>
+          <View style={{ alignItems: 'center', padding: 10, backgroundColor:colors.green(),borderRadius:5 }}>
+            <Text style={category.textCat}>Time</Text>
+          </View>
         </View>
         <View style={styles.listCard}>
           {verticalData.map((item, index) => (
@@ -69,14 +84,13 @@ const ListBlog = () => {
         </View>
       </View>
     </ScrollView>
-    
   );
-  
 };
 
 const FlatListCategory = () => {
   const [selected, setSelected] = useState(1);
-  const renderItem = ({item}) => {
+
+  const renderItem = ({ item }) => {
     const color = item.id === selected ? colors.blue() : colors.grey();
     return (
       <ItemCategory
@@ -86,23 +100,25 @@ const FlatListCategory = () => {
       />
     );
   };
+
   return (
     <FlatList
       data={CategoryList}
-      keyExtractor={item => item.id}
-      renderItem={item => renderItem({...item})}
-      ItemSeparatorComponent={() => <View style={{width: 10}} />}
-      contentContainerStyle={{paddingHorizontal: 24}}
+      keyExtractor={(item) => item.id}
+      renderItem={(item) => renderItem({ ...item })}
+      ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+      contentContainerStyle={{ paddingHorizontal: 24 }}
       horizontal
       showsHorizontalScrollIndicator={false}
     />
   );
 };
-const ItemCategory = ({item, onPress, color}) => {
+
+const ItemCategory = ({ item, onPress, color }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={category.item}>
-        <Text style={{...category.title, color}}>{item.categoryName}</Text>
+        <Text style={{ ...category.title, color }}>{item.categoryName}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -111,17 +127,17 @@ const ItemCategory = ({item, onPress, color}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#27374D',
+    backgroundColor: colors.latar(),
   },
   header: {
-    paddingHorizontal: 24,
-    justifyContent: 'space-between',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    height: 52,
     elevation: 8,
-    paddingTop: 8,
+    paddingHorizontal: 24,
+    paddingTop: 2,
     paddingBottom: 4,
+    backgroundColor: colors.latar(),
   },
   title: {
     fontSize: 20,
@@ -135,29 +151,33 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     gap: 10,
   },
-  trending:{
-    fontSize:20,
+  trending: {
+    fontSize: 25,
+    fontFamily:'Bold',
     color: colors.white(),
-    left: 30,
+    marginLeft: 25,
+    marginTop:5,
   },
   listCard: {
     paddingHorizontal: 24,
     paddingVertical: 10,
     gap: 15,
   },
-  footer: {
-    height: 40,
-    width: '100%',
-    alignItems: 'center',
-    flexDirection: 'row',
-    bottom:5,
-    backgroundColor:'#27374D',
+  drawerContent: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 3,
+    display: 'flex',
+    justifyContent: 'flex-start',
   },
-  startbottom: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    left: 150,
-  },
+  pic: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+  },
+  textProfile:{
+fontSize:20,
+  },
 });
 
 const category = StyleSheet.create({
@@ -170,11 +190,7 @@ const category = StyleSheet.create({
     marginHorizontal: 5,
     flexDirection: 'row',
     justifyContent: 'space-around',
-  },
-  itemCat: {
-    backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 20,
+   
   },
   title: {
     fontFamily: fontType['Pjs-SemiBold'],
