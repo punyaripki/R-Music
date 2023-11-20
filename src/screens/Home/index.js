@@ -7,18 +7,14 @@ import { ListHorizontal, ItemSmall } from '../../components';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerLayout } from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
-import Dashboard from '../Dashboard';
-import { Profile } from '../Profile';
 
 
 const Drawer = createDrawerNavigator();
-
-
 export default function Home() {
   return (
-    <Drawer.Navigator  headerShown={false} initialRouteName="Home" drawerContent={() => 
+    <Drawer.Navigator color={colors.latar()} headerShown={false} initialRouteName="Home" drawerContent={() => 
     <DrawerContent />}>
-      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Home" component={HomeScreen} style={styles.Navigator}/>
     </Drawer.Navigator>
   );
 }
@@ -33,6 +29,7 @@ const HomeScreen = () => {
           drawerPosition={DrawerLayout.positions.Left}
           drawerType="front"
           headerShown={false}
+          color={colors.latar()}
           renderNavigationView={DrawerContent}
        />
       </View>
@@ -45,7 +42,6 @@ const HomeScreen = () => {
 };
 
 const DrawerContent = () => {
-
   return (
     <View style={styles.drawerContent}>
       <TouchableOpacity onPress={() => navigation.navigate('profileDetail')}>
@@ -55,7 +51,6 @@ const DrawerContent = () => {
     </View>
   );
 };
-
 
 const ListBlog = () => {
   const horizontalData = BlogList.slice(0, 5);
@@ -89,7 +84,6 @@ const ListBlog = () => {
 
 const FlatListCategory = () => {
   const [selected, setSelected] = useState(1);
-
   const renderItem = ({ item }) => {
     const color = item.id === selected ? colors.blue() : colors.grey();
     return (
@@ -177,6 +171,10 @@ const styles = StyleSheet.create({
   },
   textProfile:{
 fontSize:20,
+  },
+  Navigator :{
+    color:colors.latar(),
+    fontSize:20,
   },
 });
 

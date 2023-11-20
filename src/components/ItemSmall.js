@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View,FlatList,TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {Play,Pause} from 'iconsax-react-native';
+import {Play,Pause,More} from 'iconsax-react-native';
 import React, { useState } from 'react';
 import { fontType, colors } from '../theme';
 import {useNavigation} from '@react-navigation/native';
@@ -43,6 +43,11 @@ const ItemSmall = ({ item }) => {
             onPress={() => togglePlay(item.id)}
           />
       </View>
+      <View style={styles.cardText} >
+        <Text style={styles.Text}>{item.title}</Text>
+        <Text style={styles.Text}>{item.category}</Text>
+      </View>
+      <More size={24} color={colors.white()} left={50}/>
     </View>
     </TouchableOpacity>
   );
@@ -57,24 +62,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   cardItem: {
-    backgroundColor: colors.blue(0.03),
+    backgroundColor: colors.black(),
     flexDirection: 'row',
     borderRadius: 10,
+    
   },
-  cardCategory: {
-    color: colors.blue(),
-    fontSize: 10,
-    fontFamily: fontType['Pjs-SemiBold'],
-  },
-  cardTitle: {
-    fontSize: 13,
-    fontFamily: fontType['Pjs-Bold'],
-    color: colors.black(),
-  },
+
+ 
   cardText: {
     fontSize: 40,
     fontFamily: fontType['Pjs-Medium'],
-    color: colors.grey(0.6),
   },
   cardImage: {
     width: 90,
@@ -93,4 +90,9 @@ const styles = StyleSheet.create({
     right: 45,
     bottom: 45, 
   },
+  Text :{
+    color: colors.white(),
+    paddingTop: 20,
+    
+  }
 });

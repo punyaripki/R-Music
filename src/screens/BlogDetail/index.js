@@ -1,5 +1,5 @@
-import {StyleSheet, Text, View, ScrollView, TouchableOpacity,Image} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, Text, View, ScrollView, TouchableOpacity,Image,Animated} from 'react-native';
+import React, {useState,useRef} from 'react';
 import {ArrowLeft, ArrowCircleDown2,AddCircle, } from 'iconsax-react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Library,ProfileData,BlogList} from '../../../data';
@@ -11,10 +11,15 @@ const BlogDetail = ({route}) => {
   const {blogId} = route.params;
   const selectedBlog = Library.find(blog => blog.id === blogId);
   const navigation = useNavigation();
-    
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const diffClampY = Animated.diffClamp(scrollY, 0, 52);
+  const headerY = diffClampY.interpolate({
+    inputRange: [0, 52],
+    outputRange: [0, -52],
+  });
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+ <Animated.View style={[styles.header, {transform:[{translateY:headerY}]}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ArrowLeft
             color={colors.grey(0.6)}
@@ -22,9 +27,13 @@ const BlogDetail = ({route}) => {
             size={24}
           />
         </TouchableOpacity>
-      </View>
-      <ScrollView
+      </Animated.View>
+      <Animated.ScrollView
         showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollY}}}],
+          {useNativeDriver: true},
+        )}
         contentContainerStyle={{
           paddingHorizontal: 24,
           paddingTop: 62,
@@ -52,14 +61,13 @@ const BlogDetail = ({route}) => {
           <AddCircle color={colors.grey(0.6)} variant="Linear" size={34} left={10}/>
           </View>
           <ListBlog />
-      </ScrollView>
+          </Animated.ScrollView>
     </View>
     
   );
 };
 export default BlogDetail;
 const ListBlog = () => {
-  
   const verticalData = BlogList.slice(0);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -80,15 +88,14 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 24,
-    justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
     height: 52,
     paddingTop: 8,
     paddingBottom: 4,
     position: 'absolute',
-    zIndex: 1000,
     top: 0,
+    zIndex: 1000,
     right: 0,
     left: 0,
     backgroundColor: colors.latar(),

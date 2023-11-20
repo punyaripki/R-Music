@@ -20,7 +20,7 @@ const ItemHorizontal = ({item, variant, onPress}) => {
         <View style={itemHorizontal.cardContent}>
           <View style={itemHorizontal.cardInfo}>
             <Text style={itemHorizontal.cardTitle}>{item.title}</Text>
-            <Text style={itemHorizontal.cardText}>{item.createdAt}</Text>
+            <Text style={itemHorizontal.cardText}>{item.category}</Text>
           </View>
           <View>
             <View style={itemHorizontal.cardIcon}>
