@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Home, Discover, Bookmark, Profile, BlogDetail} from '../screens';
+import {Home, Discover, Bookmark, Profile, BlogDetail,Search} from '../screens';
 import {Home2, LocationDiscover, Receipt21, ProfileCircle,MusicSquare} from 'iconsax-react-native'; 
 import { fontType, colors } from '../theme';
 
@@ -124,6 +124,14 @@ const Router = () => {
           gestureEnabled: true,
           gestureDirection : 'horizontal',
           ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="SearchPage"
+        component={Search}
+        options={{
+          headerShown: false,
+          presentation: 'transparentModal',
         }}
       />
     </Stack.Navigator>

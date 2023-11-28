@@ -46,8 +46,8 @@ const ItemSmall = ({ item }) => {
       <View style={styles.cardText} >
         <Text style={styles.Text}>{item.title}</Text>
         <Text style={styles.Text}>{item.category}</Text>
+      <More size={24} color={colors.white()} left={10} alignItems={'flex-end'}/>
       </View>
-      <More size={24} color={colors.white()} left={50}/>
     </View>
     </TouchableOpacity>
   );
@@ -64,16 +64,21 @@ const styles = StyleSheet.create({
   cardItem: {
     backgroundColor: colors.black(),
     flexDirection: 'row',
-    borderRadius: 10,
+    borderRadius: 20,
     
   },
 
  
   cardText: {
+    flex: 1,
     fontSize: 40,
     fontFamily: fontType['Pjs-Medium'],
+    backgroundColor:colors.popup(),
+    display: 'flex',
+    flexDirection: 'row',
   },
   cardImage: {
+    borderRadius:30,
     width: 90,
     height: 90,
     borderRadius: 10,

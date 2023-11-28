@@ -1,9 +1,10 @@
-import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, FlatList,TouchableWithoutFeedback} from 'react-native';
 import React from 'react';
 import {BlogList, Library} from '../../../data';
 import {ItemSmall} from '../../components'; 
 import {SearchNormal1} from 'iconsax-react-native';
 import { fontType, colors } from '../../theme';
+import { useNavigation } from "@react-navigation/native";
 
 const data = [
   {id: 1, label: 'Bali'},
@@ -40,15 +41,18 @@ const FlatListRecent = () => {
 
 
 const Discover = () => {
+  const navigation = useNavigation();
   const recentBlog = Library.slice(0);
   return (
     <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate("SearchPage")}>
       <View style={styles.header}>
         <View style={styles.bar}>
           <SearchNormal1 size={18} color={colors.white()} variant="Linear" />
           <Text style={styles.placeholder}>Search</Text>
         </View>
       </View>
+      </TouchableWithoutFeedback>
       <View>
         <Text style={recent.text}>Browse All</Text>
         <FlatListRecent />
